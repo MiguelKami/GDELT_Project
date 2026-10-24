@@ -1,0 +1,23 @@
+[
+    {
+      "name" : "source_minute",
+      "type" : "TIMESTAMP",
+      "mode" : "REQUIRED"
+    },
+    {
+      "name" : "gkg",
+      "type" : "STRING",
+      "mode" : "REQUIRED",
+      "description" : "test"
+    },
+    {
+      "name" : "frequency",
+      "type" : "INTEGER",
+      "mode" : "NULLABLE"
+    },
+    {
+      "name" : "ingested_at",
+      "type" : "TIMESTAMP",
+      "mode" : "NULLABLE"
+    }
+  ]

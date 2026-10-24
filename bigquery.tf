@@ -21,3 +21,27 @@ resource "google_bigquery_table" "event" {
 
   schema = file("${path.module}/schema/event.json")
 }
+
+resource "google_bigquery_table" "mention" {
+  dataset_id = google_bigquery_dataset.prep.dataset_id
+  table_id   = "mention"
+
+  time_partitioning {
+    type  = "DAY"
+    field = "source_minute"
+  }
+
+  schema = file("${path.module}/schema/mention.json")
+}
+
+resource "google_bigquery_table" "gkg" {
+  dataset_id = google_bigquery_dataset.prep.dataset_id
+  table_id   = "gkg"
+
+  time_partitioning {
+    type  = "DAY"
+    field = "source_minute"
+  }
+
+  schema = file("${path.module}/schema/gkg.json")
+}
