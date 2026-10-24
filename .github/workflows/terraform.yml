@@ -46,6 +46,10 @@ jobs:
 
       - name: Terraform Validate
         run: terraform validate
-
+        
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        if: github.ref_name == 'develop' && github.event_name == 'workflow_dispatch'
+        run: terraform apply -input=false tfplan
