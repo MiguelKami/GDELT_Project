@@ -1,6 +1,6 @@
 
 resource "google_storage_bucket" "raw" {
-  name     = "${var.project_id}-rawGDELT-${var.environment}"
+  name     = "${var.project_id}-rawgdelt-${var.environment}"
   location = "US"
 
   uniform_bucket_level_access = true
