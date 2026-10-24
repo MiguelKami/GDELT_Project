@@ -19,5 +19,5 @@ resource "google_bigquery_table" "event" {
     field = "source_minute"
   }
 
-  schema = file("${path.module}/schemas/event.json")
+  schema = file("${path.module}/schema/event.json")
 }
