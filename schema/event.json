@@ -1,0 +1,22 @@
+[
+    {
+      "name" : "source_minute",
+      "type" : "TIMESTAMP",
+      "mode" : "REQUIRED"
+    },
+    {
+      "name" : "ngram",
+      "type" : "STRING",
+      "mode" : "REQUIRED"
+    },
+    {
+      "name" : "frequency",
+      "type" : "INTEGER",
+      "mode" : "NULLABLE"
+    },
+    {
+      "name" : "ingested_at",
+      "type" : "TIMESTAMP",
+      "mode" : "NULLABLE"
+    }
+  ]
