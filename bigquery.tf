@@ -14,7 +14,7 @@ resource "google_bigquery_table" "event" {
   dataset_id = google_bigquery_dataset.prep.dataset_id
   table_id   = "event"
 
-  deletion_protection = isprod
+  deletion_protection = local.isprod
 
   time_partitioning {
     type  = "DAY"
@@ -28,7 +28,7 @@ resource "google_bigquery_table" "mention" {
   dataset_id = google_bigquery_dataset.prep.dataset_id
   table_id   = "mention"
 
-  deletion_protection = isprod
+  deletion_protection = local.isprod
 
   time_partitioning {
     type  = "DAY"
@@ -43,7 +43,7 @@ resource "google_bigquery_table" "gkg" {
   dataset_id = google_bigquery_dataset.prep.dataset_id
   table_id   = "gkg"
 
-  deletion_protection = isprod
+  deletion_protection = local.isprod
 
   time_partitioning {
     type  = "DAY"
