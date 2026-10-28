@@ -23,10 +23,15 @@ concurrency:
   cancel-in-progress: false
 
 
+
 jobs:
   terraform:
     if: github.event_name == 'push' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./terraform
 
 
     env:
