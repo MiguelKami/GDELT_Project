@@ -60,5 +60,5 @@ jobs:
         run: terraform plan -out=tfplan
 
       - name: Terraform Apply
-        if: ${{ false }}
+        if: github.ref_name == 'develop'
         run: terraform apply -input=false tfplan
