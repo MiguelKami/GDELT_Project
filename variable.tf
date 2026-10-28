@@ -1,4 +1,4 @@
 locals {
-    isprod = var.environment == "master"
+    isprod = var.environment == "main"
 }
    
