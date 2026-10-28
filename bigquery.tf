@@ -22,6 +22,14 @@ resource "google_bigquery_table" "event" {
   }
 
   schema = file("${path.module}/schema/event.json")
+  
+  lifecycle {
+    ignore_changes = [
+      schema,
+      time_partitioning
+    ]
+  }
+
 }
 
 resource "google_bigquery_table" "mention" {
@@ -36,6 +44,15 @@ resource "google_bigquery_table" "mention" {
   }
 
   schema = file("${path.module}/schema/mention.json")
+
+  
+  lifecycle {
+    ignore_changes = [
+      schema,
+      time_partitioning
+    ]
+  }
+
 }
 
 resource "google_bigquery_table" "gkg" {
@@ -50,4 +67,13 @@ resource "google_bigquery_table" "gkg" {
   }
 
   schema = file("${path.module}/schema/gkg.json")
+
+  
+  lifecycle {
+    ignore_changes = [
+      schema,
+      time_partitioning
+    ]
+  }
+
 }
