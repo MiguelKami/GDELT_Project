@@ -1,22 +1,104 @@
 [
-    {
-      "name" : "source_minute",
-      "type" : "TIMESTAMP",
-      "mode" : "REQUIRED"
-    },
-    {
-      "name" : "mention",
-      "type" : "STRING",
-      "mode" : "REQUIRED"
-    },
-    {
-      "name" : "frequency",
-      "type" : "INTEGER",
-      "mode" : "NULLABLE"
-    },
-    {
-      "name" : "ingested_at",
-      "type" : "TIMESTAMP",
-      "mode" : "NULLABLE"
-    }
-  ]
+  {
+    "name": "GlobalEventID",
+    "type": "INTEGER",
+    "mode": "REQUIRED",
+    "description": "Identifier of the GDELT event described in this particular news mention; joins to the Events table."
+  },
+  {
+    "name": "EventTimeDate",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "Timestamp at which the original event was first recorded, formatted YYYYMMDDHHMMSS; matches Events.DATEADDED."
+  },
+  {
+    "name": "MentionTimeDate",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "Timestamp of the update that contains this mention, formatted YYYYMMDDHHMMSS."
+  },
+  {
+    "name": "MentionType",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "Source collection identifier; 1 web, 2 citation only, 3 CORE, 4 DTIC, 5 JSTOR, 6 nontextual source."
+  },
+  {
+    "name": "MentionSourceName",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Readable name of the source, generally the website domain or the publication or archive name."
+  },
+  {
+    "name": "MentionIdentifier",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Document identifier for the mention, such as an article URL, bibliographic citation, or DOI."
+  },
+  {
+    "name": "SentenceID",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "One based sentence number where the event is mentioned in the source document."
+  },
+  {
+    "name": "Actor1CharOffset",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "Approximate character offset of the first actor reference in the processed document."
+  },
+  {
+    "name": "Actor2CharOffset",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "Approximate character offset of the second actor reference in the processed document."
+  },
+  {
+    "name": "ActionCharOffset",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "Approximate character offset of the action reference in the processed document."
+  },
+  {
+    "name": "InRawText",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "Flag equal to 1 when the event was identified in the original article text, or 0 when text restructuring was needed."
+  },
+  {
+    "name": "Confidence",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "Confidence percentage, typically 10 to 100, in GDELT extracting this event from the source article."
+  },
+  {
+    "name": "MentionDocLen",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "Document length expressed as a count of English characters."
+  },
+  {
+    "name": "MentionDocTone",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Sentiment tone measured for this particular source document, from negative one hundred to positive one hundred."
+  },
+  {
+    "name": "MentionDocTranslationInfo",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Semicolon separated information about source language and machine translation software; usually blank for English originals."
+  },
+  {
+    "name": "Extras",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Reserved field for additional mention metadata; blank in the documented version."
+  },
+  {
+    "name": "ingested_at",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE",
+    "description": "UTC timestamp when the ingestion pipeline loaded this mention into BigQuery. Added for this project; not in the native GDELT mentions feed."
+  }
+]
