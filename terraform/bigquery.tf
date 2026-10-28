@@ -8,6 +8,7 @@ resource "google_bigquery_dataset" "prep" {
     environment = var.environment
     layer       = "prep"
   }
+
 }
 
 resource "google_bigquery_table" "event" {
@@ -22,6 +23,9 @@ resource "google_bigquery_table" "event" {
 
   schema = file("${path.module}/schema/event.json")
 
+  depends_on = [
+    google_bigquery_dataset.prep
+  ]
 }
 
 resource "google_bigquery_table" "mention" {
@@ -36,6 +40,9 @@ resource "google_bigquery_table" "mention" {
 
   schema = file("${path.module}/schema/mention.json")
 
+  depends_on = [
+    google_bigquery_dataset.prep
+  ]
 }
 
 resource "google_bigquery_table" "gkg" {
@@ -49,5 +56,8 @@ resource "google_bigquery_table" "gkg" {
   }
 
   schema = file("${path.module}/schema/gkg.json")
-
+  
+  depends_on = [
+    google_bigquery_dataset.prep
+  ]
 }
