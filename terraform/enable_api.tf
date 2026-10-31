@@ -1,5 +1,7 @@
 locals {
-  api = ["secretmanager.googleapis.com"]
+  api = ["secretmanager.googleapis.com",
+         "cloudfunctions.googleapis.com",
+         "run.googleapis.com"]
 }
 
 resource "google_project_service" "services" {
@@ -9,3 +11,13 @@ resource "google_project_service" "services" {
     service = each.value
     disable_on_destroy = false
 }
+
+# locals {
+#   api = [
+#     "secretmanager.googleapis.com",
+#     "cloudfunctions.googleapis.com",
+#     "cloudbuild.googleapis.com",
+#     "artifactregistry.googleapis.com",
+#     "run.googleapis.com"
+#   ]
+# }

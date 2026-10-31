@@ -1,38 +1,19 @@
-import io
-import zipfile
+import os
 import requests
-import pandas as pd
+import functions_framework
 
-BASE_URL = "http://data.gdeltproject.org/gdeltv2"
-MANIFEST_URL = f"{BASE_URL}/lastupdate.txt"
+@functions_framework.http
+def ingest_gdelt(request):
 
-response = requests.get(MANIFEST_URL, timeout=30)
-response.raise_for_status()
+    base_url = "https://data.gdeltproject.org/gdeltv2"
 
-arquivos = response.text.strip().splitlines()
+    response = requests.get(
+        f"{base_url}/lastupdate.txt",
+        timeout=30
+    )
 
-url_eventos = next(
-    linha.split()[-1]
-    for linha in arquivos
-    if linha.split()[-1].endswith(".export.CSV.zip")
-)
+    response.raise_for_status()
 
-print(f"Arquivo encontrado: {url_eventos}")
-
-response = requests.get(url_eventos, timeout=120)
-response.raise_for_status()
-
-with zipfile.ZipFile(io.BytesIO(response.content)) as arquivo_zip:
-    nome_csv = arquivo_zip.namelist()[0]
-
-    with arquivo_zip.open(nome_csv) as arquivo:
-        df = pd.read_csv(
-            arquivo,
-            sep="\t",
-            header=None,
-            low_memory=False
-        )
-
-print(df.head())
-
-df.to_csv("gdelt_events.csv", index=False, header=False)
+    return response.text, 200, {
+        "Content-Type": "text/plain"
+    }
