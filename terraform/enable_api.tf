@@ -1,6 +1,8 @@
 locals {
   api = ["secretmanager.googleapis.com",
          "cloudfunctions.googleapis.com",
+         "cloudbuild.googleapis.com",
+         "artifactregistry.googleapis.com",
          "run.googleapis.com"]
 }
 
