@@ -20,17 +20,20 @@ resource "google_cloudfunctions2_function" "gdelt_ingestion" {
   location    = "us-central1"
   description = "GDELT data ingestion function"
 
-  build_config {
-    runtime     = "python312"
-    entry_point = "ingest_gdelt"
 
-    source {
-      storage_source {
-        bucket = google_storage_bucket.code.name
-        object = google_storage_bucket_object.gdelt_source.name
-      }
+build_config {
+  runtime     = "python312"
+  entry_point = "ingest_gdelt"
+
+  service_account = google_service_account.gdelt_build.id
+
+  source {
+    storage_source {
+      bucket = google_storage_bucket.code.name
+      object = google_storage_bucket_object.gdelt_source.name
     }
   }
+}
 
   service_config {
     available_memory                 = "512M"
@@ -44,9 +47,10 @@ resource "google_cloudfunctions2_function" "gdelt_ingestion" {
     # }
   }
 
-  depends_on = [
-    google_project_service.services,
-    google_storage_bucket_object.gdelt_source
-
-  ]
+depends_on = [
+  google_project_service.services,
+  google_storage_bucket_object.gdelt_source,
+  google_project_iam_member.gdelt_build_permissions,
+  google_service_account_iam_member.github_build_user
+]
 }
