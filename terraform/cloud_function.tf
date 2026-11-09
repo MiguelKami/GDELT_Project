@@ -20,7 +20,6 @@ resource "google_cloudfunctions2_function" "gdelt_ingestion" {
   location    = "us-central1"
   description = "GDELT data ingestion function"
 
-
 build_config {
   runtime     = "python312"
   entry_point = "ingest_gdelt"
@@ -42,15 +41,23 @@ build_config {
     max_instance_count               = 1
     max_instance_request_concurrency = 1
 
+
+    service_account_email = google_service_account.gdelt_runtime.email
+
+    environment_variables = {
+      RAW_BUCKET     = google_storage_bucket.raw.name
+      GDELT_BASE_URL = "https://data.gdeltproject.org/gdeltv2"
+    }
+
     # environment_variables = {
     #   GDELT_BASE_URL = "https://data.gdeltproject.org/gdeltv2"
     # }
   }
 
-depends_on = [
-  google_project_service.services,
-  google_storage_bucket_object.gdelt_source,
-  google_project_iam_member.gdelt_build_permissions,
-  google_service_account_iam_member.github_build_user
-]
+  depends_on = [
+    google_project_service.services,
+    google_storage_bucket_object.gdelt_source,
+    google_project_iam_member.gdelt_build_permissions,
+    google_service_account_iam_member.github_build_user
+  ]
 }
