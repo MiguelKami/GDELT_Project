@@ -42,7 +42,7 @@ build_config {
     max_instance_request_concurrency = 1
 
 
-    service_account_email = google_service_account.gdelt_runtime.email
+    service_account_email = google_service_account.gdelt_build.email
 
     environment_variables = {
       RAW_BUCKET     = google_storage_bucket.raw.name
