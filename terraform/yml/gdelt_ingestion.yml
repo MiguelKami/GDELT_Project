@@ -1,0 +1,17 @@
+
+main:
+  steps:
+    - call_gdelt_function:
+        call: http.post
+        args:
+          url: ${sys.get_env("FUNCTION_URL")}
+          auth:
+            type: OIDC
+          headers:
+            Content-Type: application/json
+          body:
+            source: "workflows"
+        result: ingestion_result
+
+    - return_result:
+        return: ${ingestion_result.body}

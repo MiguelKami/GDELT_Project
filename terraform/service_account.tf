@@ -42,3 +42,12 @@ resource "google_service_account_iam_member" "github_build_user" {
 
   member = "serviceAccount:gdelt-project@${var.project_id}.iam.gserviceaccount.com"
 }
+
+resource "google_cloud_run_service_iam_member" "workflow_invoker" {
+  project  = var.project_id
+  location = google_cloudfunctions2_function.gdelt_ingestion.location
+  service  = google_cloudfunctions2_function.gdelt_ingestion.name
+
+  role   = "roles/run.invoker"
+  member = "serviceAccount:${google_service_account.gdelt_build.email}"
+}
