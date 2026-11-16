@@ -15,7 +15,7 @@ resource "google_cloud_scheduler_job" "gdelt_scheduler" {
     body = base64encode(jsonencode({tentative = 1}))
 
     oidc_token {
-      service_account_email = google_service_account_iam_member.github_build_user.email
+      service_account_email = google_service_account.gdelt_build.email
       audience = google_cloudfunctions2_function.gdelt_ingestion.service_config[0].uri
     }
   }
