@@ -4,7 +4,7 @@ main:
     - call_gdelt_function:
         call: http.post
         args:
-          url: ${cf}
+          url: "${cf}"
           auth:
             type: OIDC
           headers:
@@ -14,4 +14,4 @@ main:
         result: ingestion_result
 
     - return_result:
-        return: ${ingestion_result.body}
+        return: $${ingestion_result.body}
