@@ -10,8 +10,11 @@ resource "google_workflows_workflow" "gdelt_pipeline" {
     FUNCTION_URL = google_cloudfunctions2_function.gdelt_ingestion.service_config[0].uri
   }
 
-  source_contents = file(
-    "${path.module}/yml/gdelt_ingestion.yml"
+  source_contents = templatefile(
+    "${path.module}/workflows/gdelt_ingestion.yaml",
+    {
+      cf = google_cloudfunctions2_function.gdelt_ingestion.service_config[0].uri
+    }
   )
 
   depends_on = [

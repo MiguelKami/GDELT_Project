@@ -4,7 +4,7 @@ main:
     - call_gdelt_function:
         call: http.post
         args:
-          url: ${sys.get_env("FUNCTION_URL")}
+          url: ${cf}
           auth:
             type: OIDC
           headers:
