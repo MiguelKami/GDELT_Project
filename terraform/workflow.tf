@@ -11,7 +11,7 @@ resource "google_workflows_workflow" "gdelt_pipeline" {
   }
 
   source_contents = templatefile(
-    "${path.module}/workflows/gdelt_ingestion.yaml",
+    "${path.module}/..//workflows/gdelt_ingestion.yaml",
     {
       cf = google_cloudfunctions2_function.gdelt_ingestion.service_config[0].uri
     }
