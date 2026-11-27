@@ -94,3 +94,50 @@ resource "google_bigquery_table" "event_external" {
   depends_on = [google_bigquery_dataset.raw]
 }
 
+resource "google_bigquery_table" "gkg_external" {
+  dataset_id = google_bigquery_dataset.raw.dataset_id
+  table_id   = "event_external"
+
+  external_data_configuration {
+    autodetect    = true
+    source_format = "PARQUET"
+
+    source_uris = [
+      "gs://${google_storage_bucket.raw.name}/data/gkg/*"
+    ]
+
+    hive_partitioning_options {
+      mode = "CUSTOM"
+
+      source_uri_prefix = "gs://${google_storage_bucket.raw.name}/data/gkg/{dt:STRING}"
+
+      require_partition_filter = false
+    }
+  }
+
+  depends_on = [google_bigquery_dataset.raw]
+}
+
+resource "google_bigquery_table" "mention_external" {
+  dataset_id = google_bigquery_dataset.raw.dataset_id
+  table_id   = "event_external"
+
+  external_data_configuration {
+    autodetect    = true
+    source_format = "PARQUET"
+
+    source_uris = [
+      "gs://${google_storage_bucket.raw.name}/data/mention/*"
+    ]
+
+    hive_partitioning_options {
+      mode = "CUSTOM"
+
+      source_uri_prefix = "gs://${google_storage_bucket.raw.name}/data/mention/{dt:STRING}"
+
+      require_partition_filter = false
+    }
+  }
+
+  depends_on = [google_bigquery_dataset.raw]
+}
