@@ -14,21 +14,12 @@ resource "google_bigquery_dataset" "prep" {
 resource "google_bigquery_table" "event" {
   dataset_id = google_bigquery_dataset.prep.dataset_id
   table_id   = "event"
-  schema = file("${path.module}/schema/event.json")
-  
-  external_data_configuration {
-    autodetect = true
-    source_format = "PARQUET"
-    source_uris = ["gs://${google_storage_bucket.raw.name}/data/events/dt=*/"]
-    
-    hive_partitioning_options {
-      mode = "CUSTOM"
-      source_uri_prefix = "gs://${google_storage_bucket.raw.name}/data/event/{dt:STRING}"
-      require_partition_filter = false
-    }
-   
-   }
 
+  time_partitioning {
+    type = "DAY"
+  }
+
+  schema = file("${path.module}/schema/event.json")
 }
 
 resource "google_bigquery_table" "mention" {
@@ -64,3 +55,27 @@ resource "google_bigquery_table" "gkg" {
     google_bigquery_dataset.prep
   ]
 }
+
+
+resource "google_bigquery_table" "event_external" {
+  dataset_id = google_bigquery_dataset.prep.dataset_id
+  table_id   = "event_external"
+
+  external_data_configuration {
+    autodetect    = true
+    source_format = "PARQUET"
+
+    source_uris = [
+      "gs://${google_storage_bucket.raw.name}/data/events/*"
+    ]
+
+    hive_partitioning_options {
+      mode = "CUSTOM"
+
+      source_uri_prefix = "gs://${google_storage_bucket.raw.name}/data/events/{dt:STRING}"
+
+      require_partition_filter = false
+    }
+  }
+}
+
