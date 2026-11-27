@@ -11,6 +11,19 @@ resource "google_bigquery_dataset" "prep" {
 
 }
 
+
+resource "google_bigquery_dataset" "raw" {
+  dataset_id  = "gdelt_raw_${var.environment}"
+  description = "GDELT data raw layer"
+  location    = "US"
+
+  labels = {
+    environment = var.environment
+    layer       = "raw"
+  }
+
+}
+
 resource "google_bigquery_table" "event" {
   dataset_id = google_bigquery_dataset.prep.dataset_id
   table_id   = "event"
@@ -58,7 +71,7 @@ resource "google_bigquery_table" "gkg" {
 
 
 resource "google_bigquery_table" "event_external" {
-  dataset_id = google_bigquery_dataset.prep.dataset_id
+  dataset_id = google_bigquery_dataset.raw.dataset_id
   table_id   = "event_external"
 
   external_data_configuration {
@@ -77,5 +90,7 @@ resource "google_bigquery_table" "event_external" {
       require_partition_filter = false
     }
   }
+
+  depends_on = [google_bigquery_dataset.raw]
 }
 
