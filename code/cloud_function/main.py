@@ -125,20 +125,31 @@ def make_parquet_schema(data_type):
 PARQUET_SCHEMAS = {name: make_parquet_schema(name) for name in FILE_TYPES}
 
 
+
 def build_object_name(data_type, filename):
-    """Build a stable object name from the published GDELT batch timestamp."""
+    """Build GCS object path using UTC batch timestamp."""
+
     batch_id = filename.split(".", 1)[0]
-    batch_time = datetime.strptime(batch_id, "%Y%m%d%H%M%S").replace(
-        tzinfo=timezone.utc
+
+    batch_time = datetime.strptime(
+        batch_id, "%Y%m%d%H%M%S"
+    ).replace(tzinfo=timezone.utc)
+
+    batch_hour = batch_time.replace(
+        minute=0,
+        second=0,
+        microsecond=0
     )
-    batch_hour = batch_time.replace(minute=0, second=0, microsecond=0)
+
     hour_bucket = batch_hour.strftime("%Y%m%d%H")
+
     object_name = (
-        f"{data_type}/hour_bucket={hour_bucket}/"
+        f"data/{data_type}/"
+        f"hour_bucket={hour_bucket}/"
         f"{data_type}_{batch_id}.parquet"
     )
-    return object_name, batch_hour
 
+    return object_name, batch_hour
 
 def download_to_file(session, source_url, target_path):
     """Stream the ZIP to disk to limit memory consumption."""
