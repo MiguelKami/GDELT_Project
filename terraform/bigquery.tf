@@ -14,18 +14,14 @@ resource "google_bigquery_dataset" "prep" {
 resource "google_bigquery_table" "event" {
   dataset_id = google_bigquery_dataset.prep.dataset_id
   table_id   = "event"
-
-  deletion_protection = local.isprod
-
-  time_partitioning {
-    type  = "DAY"
-  }
-
   schema = file("${path.module}/schema/event.json")
+  
+  external_data_configuration {
+    autodetect = true
+    source_format = "PARQUET"
+    source_uris = ["gs://${google_storage_bucket.raw.name}/data/event/dt=*/*"]
+   }
 
-  depends_on = [
-    google_bigquery_dataset.prep
-  ]
 }
 
 resource "google_bigquery_table" "mention" {
