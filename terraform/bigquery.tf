@@ -19,7 +19,7 @@ resource "google_bigquery_table" "event" {
   external_data_configuration {
     autodetect = true
     source_format = "PARQUET"
-    source_uris = ["gs://${google_storage_bucket.raw.name}/data/event/dt=*/*"]
+    source_uris = ["gs://${google_storage_bucket.raw.name}/data/event/dt=*/"]
    }
 
 }
