@@ -96,7 +96,7 @@ resource "google_bigquery_table" "event_external" {
 
 resource "google_bigquery_table" "gkg_external" {
   dataset_id = google_bigquery_dataset.raw.dataset_id
-  table_id   = "event_external"
+  table_id   = "gkg_external"
 
   external_data_configuration {
     autodetect    = true
@@ -120,7 +120,7 @@ resource "google_bigquery_table" "gkg_external" {
 
 resource "google_bigquery_table" "mention_external" {
   dataset_id = google_bigquery_dataset.raw.dataset_id
-  table_id   = "event_external"
+  table_id   = "mention_external"
 
   external_data_configuration {
     autodetect    = true
