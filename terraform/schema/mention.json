@@ -100,5 +100,11 @@
     "type": "TIMESTAMP",
     "mode": "NULLABLE",
     "description": "UTC timestamp when the ingestion pipeline loaded this mention into BigQuery. Added for this project; not in the native GDELT mentions feed."
+  },
+  {
+    "name": "hour_time",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE",
+    "description": "UTC hour of the GDELT source batch"
   }
 ]
